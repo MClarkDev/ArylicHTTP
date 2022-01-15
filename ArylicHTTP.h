@@ -20,6 +20,12 @@ class ArylicHTTP {
     void seekTo(String ip, int seconds);
     void setVolume(String ip, int vol);
     void enableMute(String ip, boolean mute);
+	void playURL(String ip, String url);
+	void shutdown(String ip, int seconds);
+	void groupLeave(String ip);
+	void groupJoin(String ip, String master);
+	void setInput(String ip, String mode);
+	void preset(String ip, int preset);
 };
 
 #endif
