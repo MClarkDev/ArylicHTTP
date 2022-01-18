@@ -3,8 +3,8 @@
 #define WIFI_SSID "network.name"
 #define WIFI_PASS "<password>"
 
-#define ARYLIC_DEV_M "10.3.106.120"
-#define ARYLIC_DEV_S "10.3.106.121"
+#define ARYLIC_M "192.168.1.200"
+#define ARYLIC_S "192.168.1.201"
 
 void setup() {
   WiFi.mode(WIFI_STA);
@@ -14,26 +14,25 @@ void setup() {
     delay(1);
   }
 
-  ArylicHTTP* api = new ArylicHTTP();
+  ArylicHTTP* apiM = new ArylicHTTP(ARYLIC_M);
+  ArylicHTTP* apiS = new ArylicHTTP(ARYLIC_S);
 
-  api->groupLeave(ARYLIC_DEV_M);
+  apiM->groupLeave();
+  apiS->groupLeave();
 
-  delay(250);
-  
-  api->groupLeave(ARYLIC_DEV_S);
-  
   delay(100);
   
-  api->groupJoin(ARYLIC_DEV_S, ARYLIC_DEV_M);
+  apiS->groupJoin(ARYLIC_M);
 
   delay(250);
 
-  api->setVolume(ARYLIC_DEV_M, 65);
-  api->setVolume(ARYLIC_DEV_S, 40);
+  apiM->setVolume(65);
+  apiS->setVolume(40);
 
   delay(100);
 
-  api->preset(ARYLIC_DEV_M, 1);
+  apiM->preset(1);
 }
 
 void loop() {}
+
