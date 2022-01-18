@@ -1,92 +1,93 @@
+/**
+ * ArylicHTTP, 0.0.2
+ *
+ * A simple ESP32 library for interfacing with Arylic audio devices.
+ *
+ * MClarkDev.com, 2022
+ */
+
 #include "ArylicHTTP.h"
 
-ArylicHTTP::ArylicHTTP() {
+ArylicHTTP::ArylicHTTP(String ip) {
+  target = ip;
 }
 
-String ArylicHTTP::get(String ip, String cmd) {
-    String uri = "http://" + ip;
-    uri += "/httpapi.asp?command=";
-    uri += cmd;
+String ArylicHTTP::get(String cmd) {
+  String uri = "http://" + target;
+  uri += "/httpapi.asp?command=" + cmd;
 
-    HTTPClient http;
-    http.begin(uri.c_str());
-    int httpCode = http.GET();
-    String body = http.getString();
-    http.end();
-    return body;
+  HTTPClient http;
+  http.begin(uri.c_str());
+  http.GET();
+  String body = http.getString();
+  http.end();
+  return body;
 }
 
-String ArylicHTTP::getStatus(String ip) {
-   String cmd = "getStatusEx";
-  return get(ip, cmd);
+String ArylicHTTP::getStatus() {
+  return get("getStatusEx");
 }
 
-String ArylicHTTP::getPlayerStatus(String ip) {
-  String cmd = "getPlayerStatus";
-  return get(ip, cmd);
+String ArylicHTTP::getPlayerStatus() {
+  return get("getPlayerStatus");
 }
 
-void ArylicHTTP::playbackPause(String ip) {
-  String cmd = "setPlayerCmd:pause";
-  get(ip, cmd);
+void ArylicHTTP::playbackPause() {
+  get("setPlayerCmd:pause");
 }
 
-void ArylicHTTP::playbackResume(String ip) {
-  String cmd = "setPlayerCmd:resume";
-  get(ip, cmd);
+void ArylicHTTP::playbackResume() {
+  get("setPlayerCmd:resume");
 }
 
-void ArylicHTTP::playbackPrev(String ip) {
-  String cmd = "setPlayerCmd:prev";
-  get(ip, cmd);
+void ArylicHTTP::playbackPrev() {
+  get("setPlayerCmd:prev");
 }
 
-void ArylicHTTP::playbackNext(String ip) {
-  String cmd = "setPlayerCmd:next";
-  get(ip, cmd);
+void ArylicHTTP::playbackNext() {
+  get("setPlayerCmd:next");
 }
 
-void ArylicHTTP::seekTo(String ip, int seconds) {
-  String cmd = "setPlayerCmd:seek:" + String(seconds);
-  get(ip, cmd);
+void ArylicHTTP::seekTo(int seconds) {
+  get("setPlayerCmd:seek:" + String(seconds));
 }
 
-void ArylicHTTP::setVolume(String ip, int vol) {
-  String cmd = "setPlayerCmd:vol:" + String(vol);
-  get(ip, cmd);
+void ArylicHTTP::setVolume(int vol) {
+  get("setPlayerCmd:vol:" + String(vol));
 }
 
-void ArylicHTTP::enableMute(String ip, boolean mute) {
-  String cmd = "setPlayerCmd:mute:" + String(mute);
-  get(ip, cmd);
+String ArylicHTTP::setVolumeStepUp() {
+  return get("setPlayerCmd:Vol%2B%2B");
 }
 
-void ArylicHTTP::playURL(String ip, String url) {
-  String cmd = "setPlayerCmd:play:" + url;
-  get(ip, cmd);
+String ArylicHTTP::setVolumeStepDown() {
+  return get("setPlayerCmd:Vol--");
 }
 
-void ArylicHTTP::shutdown(String ip, int seconds) {
-  String cmd = "setShutdown:" + String(seconds);
-  get(ip, cmd);
+void ArylicHTTP::enableMute(boolean mute) {
+  get("setPlayerCmd:mute:" + String(mute));
 }
 
-void ArylicHTTP::groupLeave(String ip) {
-  String cmd = "multiroom:Ungroup";
-  get(ip, cmd);
+void ArylicHTTP::playURL(String url) {
+  get("setPlayerCmd:play:" + url);
 }
 
-void ArylicHTTP::groupJoin(String ip, String master) {
-  String cmd = "ConnectMasterAp:JoinGroupMaster:eth" + master + ":wifi0.0.0.0";
-  get(ip, cmd);
+void ArylicHTTP::shutdown(int seconds) {
+  get("setShutdown:" + String(seconds));
 }
 
-void ArylicHTTP::setInput(String ip, String mode) {
-  String cmd = "setPlayerCmd:switchmode:" + mode;
-  get(ip, cmd);
+void ArylicHTTP::groupLeave() {
+  get("multiroom:Ungroup");
 }
 
-void ArylicHTTP::preset(String ip, int preset) {
-  String cmd = "MCUKeyShortClick:" + String(preset);
-  get(ip, cmd);
+void ArylicHTTP::groupJoin(String master) {
+  get("ConnectMasterAp:JoinGroupMaster:eth" + master + ":wifi0.0.0.0");
+}
+
+void ArylicHTTP::setInput(String mode) {
+  get("setPlayerCmd:switchmode:" + mode);
+}
+
+void ArylicHTTP::preset(int preset) {
+  get("MCUKeyShortClick:" + String(preset));
 }

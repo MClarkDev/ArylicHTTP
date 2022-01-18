@@ -7,25 +7,28 @@
 class ArylicHTTP {
 
   private:
-    String get(String ip, String cmd);
+    String target;
+    String get(String cmd);
 
   public:
-    ArylicHTTP();
-    String getStatus(String ip);
-    String getPlayerStatus(String ip);
-    void playbackPause(String ip);
-    void playbackResume(String ip);
-    void playbackPrev(String ip);
-    void playbackNext(String ip);
-    void seekTo(String ip, int seconds);
-    void setVolume(String ip, int vol);
-    void enableMute(String ip, boolean mute);
-	void playURL(String ip, String url);
-	void shutdown(String ip, int seconds);
-	void groupLeave(String ip);
-	void groupJoin(String ip, String master);
-	void setInput(String ip, String mode);
-	void preset(String ip, int preset);
+    ArylicHTTP(String ip);
+    String getStatus();
+    String getPlayerStatus();
+    void playbackPause();
+    void playbackResume();
+    void playbackPrev();
+    void playbackNext();
+    void seekTo(int seconds);
+    void setVolume(int vol);
+    String setVolumeStepUp();
+    String setVolumeStepDown();
+    void enableMute(boolean mute);
+    void playURL(String url);
+    void shutdown(int seconds);
+    void groupLeave();
+    void groupJoin(String master);
+    void setInput(String mode);
+    void preset(int preset);
 };
 
 #endif
