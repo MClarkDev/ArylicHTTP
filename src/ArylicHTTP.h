@@ -16,6 +16,7 @@ class ArylicHTTP {
     String getPlayerStatus();
     void playbackPause();
     void playbackResume();
+    void playbackTogglePlay();
     void playbackPrev();
     void playbackNext();
     void seekTo(int seconds);

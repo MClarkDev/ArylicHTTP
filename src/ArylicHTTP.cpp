@@ -40,6 +40,10 @@ void ArylicHTTP::playbackResume() {
   get("setPlayerCmd:resume");
 }
 
+void ArylicHTTP::playbackTogglePlay() {
+  get("setPlayerCmd:onepause");
+}
+
 void ArylicHTTP::playbackPrev() {
   get("setPlayerCmd:prev");
 }

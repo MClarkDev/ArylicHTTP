@@ -26,6 +26,7 @@ Serial.println(device->getPlayerStatus());
 // Play / Pause
 device->playbackPause();
 device->playbackResume();
+device->playbackTogglePlay();
 
 // Next / Prev
 device->playbackNext();
